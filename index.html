@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./assets//styles/reset.css">
+    <link rel="stylesheet" href="./assets//styles/style.css">
+    <title>Document</title>
+</head>
+<body>
+    <div class="container">
+        <div class="pizzas">
+            <div class="pizza" id="pepperoni">
+                <div class="pizza-image"></div>
+                <p>Пепперони</p>
+            </div>
+            <div class="pizza" id="margarita">
+                <div class="pizza-image"></div>
+                <p>Маргарита</p>
+            </div>
+            <div class="pizza" id="bavarian">
+                <div class="pizza-image"></div>
+                <p>Баварская</p>
+            </div>
+        </div>
+        <div class="options">
+            <div class="size">
+                <h3>Выберите размер</h3>
+                <span class="info"></span>
+                <p class="size">
+                    <span id="small-size">Маленькая</span>
+                    <span id="big-size">Большая</span>
+                </p>
+            </div>
+            <div class="toppings">
+                <h3>Добавить по вкусу</h3>
+                <div class="topping disable" id="cheese-board">
+                    <div class="topping-image"></div>
+                    <p>Сырный<br>бортик</p>
+                    <p>189 ₽</p>
+                </div>
+                <div class="topping disable" id="creamy-mozzarella">
+                    <div class="topping-image"></div>
+                    <p>Сливочная<br>моцарелла</p>
+                    <p>99 ₽</p>
+                </div>
+                <div class="topping disable" id="cheddar-parmesan">
+                    <div class="topping-image"></div>
+                    <p>Чеддер и<br>пармезан</p>
+                    <p>99 ₽</p>
+                </div>
+            </div>
+            <button class="basket-button">
+                <p>Добавить в корзину за</p>
+                <p><span id="total-price">0</span> ₽ (<span id="total-calories">0</span> кКалл)</p>
+            </button>
+        </div>
+    </div>
+    <script src="./data.js"></script>
+    <script src="./index.js"></script>
+</body>
+</html>
