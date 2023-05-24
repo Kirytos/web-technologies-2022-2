@@ -1,0 +1,47 @@
+#comments {
+    border: 0.5vh solid black;
+    border-radius: 2vh;
+    margin: 3vh auto;
+    padding: 3vh;
+    width: 70%;
+}
+
+.comments_title {
+    font-size: 3vh;
+}
+
+.comment {
+    padding: 1vh;
+    border-top: .3vh solid black;
+    border-left: .3vh solid black;
+    border-right: .3vh solid black;
+}
+
+.comment:last-child {
+    border-bottom: .3vh solid black;
+}
+
+.comment_profile {
+    display: flex;
+    column-gap: 2vh;
+}
+
+.comment_image {
+    width: 6vh;
+    height: 6vh;
+    align-self: flex-end;
+}
+
+.comment_email {
+    font-size: 2vh;
+    font-weight: 700;
+    align-self: center;
+}
+
+.comment_body {
+    font-size: 2vh;
+}
+
+.comment_body::first-letter {
+    text-transform: uppercase;
+}
