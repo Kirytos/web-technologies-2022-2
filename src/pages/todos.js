@@ -3,6 +3,73 @@ import Auth from "../services/auth.js";
 import location from "../services/location.js";
 import loading from "../services/loading.js";
 
+const renderTodo = (todosEl, todo) => {
+    const container = document.createElement('div');
+    container.id = `${todo.id}`
+    container.style = `display:flex; 
+        justify-content:space-between;
+        align-items: center;
+        column-gap: 3vh;
+        padding: 3vh;
+        margin-bottom: 2vh;
+        border-bottom: 0.1vh solid black;
+    `
+
+    const completed = document.createElement('input');
+    completed.style.width = "4vh"
+    completed.style.aspectRatio = "1/1"
+    completed.checked = todo.completed === "true";
+    completed.type = 'checkbox';
+
+    const description = document.createElement('p');
+    description.style.textDecoration = todo.completed === "true" && "line-through";
+    description.style.wordBreak = "break-all";
+    description.style.width = "80%";
+    description.innerHTML = todo.description;
+
+    const deleteButton = document.createElement('span');
+    deleteButton.style.cursor = "pointer";
+    deleteButton.style.fontSize = "5vh"
+    deleteButton.innerText = "⌫";
+
+    completed.onchange = async (e) => {
+        const values = {
+            id: todo.id,
+            completed: e.target.checked
+        };
+
+        const {ok, data} = await Todo.update(values);
+
+        if (ok) {
+            if (completed.checked) {
+                description.style.textDecoration = 'line-through';
+            } else {
+                description.style.textDecoration = 'none';
+            }
+        }
+    }
+
+    deleteButton.onclick = async () => {
+        const { ok } = await Todo.delete(todo.id);
+        if (ok) {
+            removeTodo(todo.id)
+        }
+    }
+
+    container.appendChild(completed);
+    container.appendChild(description);
+    container.appendChild(deleteButton);
+    todosEl.appendChild(container);
+}
+
+const removeTodo = (todoId) => {
+    const todo = document.getElementById(`${todoId}`)
+
+    const parent = todo.parentNode
+    
+    parent.removeChild(todo)
+}
+
 const renderTodos = async () => {
     const todos = await Todo.getAll();
     const todosEl = document.querySelector('.todos');
@@ -10,69 +77,13 @@ const renderTodos = async () => {
     todosEl.replaceChildren();
 
     todos.data.map((todo) => {
-        const container = document.createElement('div');
-        container.style = `display:flex; 
-            justify-content:space-between;
-            align-items: center;
-            column-gap: 3vh;
-            padding: 3vh;
-            margin-bottom: 2vh;
-            border: 1px solid black;
-            border-radius: 2vh
-        `
-
-        const completed = document.createElement('input');
-        completed.style.width = "4vh"
-        completed.style.aspectRatio = "1/1"
-        completed.checked = todo.completed === "true";
-        completed.type = 'checkbox';
-
-        const description = document.createElement('p');
-        description.style.textDecoration = todo.completed === "true" && "line-through";
-        description.style.wordBreak = "break-all";
-        description.style.width = "80%";
-        description.innerHTML = todo.description;
-
-        const deleteButton = document.createElement('span');
-        deleteButton.style.cursor = "pointer";
-        deleteButton.style.fontSize = "5vh"
-        deleteButton.innerText = "⌫";
-
-        completed.onchange = async (e) => {
-            const values = {
-                id: todo.id,
-                completed: e.target.checked
-            };
-
-            const { ok } = await Todo.update(values);
-
-            if (ok) {
-                if (completed.checked) {
-                    description.style.textDecoration = 'line-through';
-                } else {
-                    description.style.textDecoration = 'none';
-                }
-
-                await renderTodos();
-            }
-        }
-
-        deleteButton.onclick = async () => {
-            const { ok } = await Todo.delete(todo.id);
-            if (ok) {
-                await renderTodos();
-            }
-        }
-
-        container.appendChild(completed);
-        container.appendChild(description);
-        container.appendChild(deleteButton);
-        todosEl.appendChild(container);
+        renderTodo(todosEl, todo);
     });
 }
 
 const init = async () => {
     const { ok: isLogged } = await Auth.me()
+    const todosEl = document.querySelector('.todos');
 
     if (!isLogged) {
         return location.login()
@@ -92,10 +103,10 @@ const init = async () => {
     addTodoButton.onclick = async (e) => {
         e.preventDefault()
 
-        const { ok } = await Todo.create(todoInputValue);
+        const { ok, data } = await Todo.create(todoInputValue);
 
         if (ok) {
-            await renderTodos();
+            renderTodo(todosEl, data);
         }
     }
 
