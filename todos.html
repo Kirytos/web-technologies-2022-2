@@ -1,34 +1,58 @@
 <!doctype html>
 <html lang="ru">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
     <link rel="stylesheet" href="./src/assets/styles/style.css">
 </head>
+
 <body>
-<header class="header">
-    <nav class="nav">
-        <a href="/index.html">index</a>
-        <a href="/user.html">user</a>
-        <a href="/logout.html">logout</a>
-    </nav>
-</header>
+    <header class="header">
+        <nav class="nav">
+            <a href="/index.html">index</a>
+            <a href="/user.html">user</a>
+            <a href="/logout.html">logout</a>
+        </nav>
+    </header>
 
-<main class="main">
+    <main class="main" style="width:100%;">
+        <form 
+            class="todo-form"
+            style="display:flex; justify-content: center; column-gap: 5rem;"
+        >
+            <input 
+                class="todo-form_input"
+                type="text"
+                style="border: none; border-bottom: 0.1vh solid black;"
+                placeholder="To-do text"
+                maxlength="100"
+                required
+            >
+            <button 
+                class="todo-form_button"
+                type="submit"
+                style="background: rgb(0, 123, 255); padding: 10px; color: white; cursor: pointer; border: none; border-radius: 1vh;"
+                onmouseover="this.style.backgroundColor='rgb(0, 74, 154)';"
+                onmouseout="this.style.backgroundColor='rgb(0, 123, 255)';">
+                Add new To-do
+            </button>
+        </form>
+        <div
+            class="todos"
+            style="margin-top: 3vh;">
 
-</main>
+        </div>
+    </main>
 
-<div class="loader-wrapper" data-loading>
-    <img
-            src="./src/assets/icons/loader.svg"
-            alt=""
-            class="loader"
-    >
-</div>
+    <div class="loader-wrapper" data-loading>
+        <img src="./src/assets/icons/loader.svg" alt="" class="loader">
+    </div>
 
-<script src="src/pages/todos.js" type="module"></script>
+    <script src="src/pages/todos.js" type="module"></script>
 </body>
+
 </html>
